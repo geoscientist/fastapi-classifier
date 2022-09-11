@@ -1,0 +1,34 @@
+NAME: ceo
+TASK: classification
+TRAIN_DATA: /home/DVL/sokolovav/Downloads/full_df_v2.65-_17.01.22.xlsx
+TEST_DATA: /home/DVL/sokolovav/Downloads/full_df_v2.65-_17.01.22.xlsx
+FEATURE_COLS:
+  - Комментарий
+TARGET_COL: target
+CLASSES:
+  - no_oper: 0.60
+  - remote_reboot: 0.69
+  - host_open: 0.86
+  - host_close: 0.89
+  - cards: 0.60
+  - cassette: 0.69
+  - remote_balance: 0.69
+  - screen: 0.56
+  - screen_black: 0.65
+  - screen_white: 0.65
+  - screen_blue: 0.59
+  - screen_picture: 0.50
+  - coordination: 0.70
+  - coordination_eta: 0.60
+  - check_printer: 0.79
+  - nfc: 0.59
+  - slot: 0.60
+  - mac: 0.90
+  - empty: 0.85
+PREPROCESSORS:
+  #- stemming
+  #- lemmatizing
+  - fix_text
+
+POSTPROCESSORS:
+  - no_oper: no_oper_processor

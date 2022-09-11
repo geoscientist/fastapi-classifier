@@ -1,0 +1,19 @@
+FROM dregistry.dvl.mc/docker/centos7-python:3.7
+
+USER root
+RUN yum install -y gcc gcc-c++ \
+    && yum clean all \
+    && rm -rf /var/cache/yum/
+
+USER app
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN grep deep requirements.txt > req.base.txt \
+    && pip install -r requirements.txt \
+    && cd /home/app/ && curl --limit-rate 20m http://mupdate1.prod.mc/misc/deeppavlov-20210604.tgz 2>/dev/null | tar -xzvf - \
+    && cd /app \
+    && python3 -c "import deeppavlov; deeppavlov.build_model(deeppavlov.configs.spelling_correction.levenshtein_corrector_ru, download=True)" \
+    && echo "Requirements were installed." \
+    && rm -f req.base.txt requirements.txt
